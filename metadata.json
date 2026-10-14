@@ -1,0 +1,8 @@
+{
+  "name": "FoodHub Delivery & Management Platform",
+  "description": "Multi-portal food delivery platform featuring Customer ordering, Vendor order terminal, Rider GPS dispatch, Admin management, and Sub-Admin portals.",
+  "requestor": "evo.ibra31@gmail.com",
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
