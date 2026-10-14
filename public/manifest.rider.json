@@ -3,7 +3,7 @@
   "name": "foodiplace Rider",
   "short_name": "Rider App",
   "description": "foodiplace Rider Delivery App: Live GPS dispatch, proximity orders, and cash delivery.",
-  "start_url": "./",
+  "start_url": "./?source=webapk",
   "scope": "./",
   "display": "standalone",
   "orientation": "portrait",
