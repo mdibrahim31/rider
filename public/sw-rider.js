@@ -1,7 +1,8 @@
 // Service Worker for FoodHub Rider App
 const CACHE_NAME = 'foodhub-rider-v1';
 const ASSETS_TO_CACHE = [
-  './rider.html',
+  './',
+  './index.html',
   './manifest.rider.json',
   './icons/icon-rider-192.png',
   './icons/icon-rider-512.png',
@@ -55,7 +56,7 @@ self.addEventListener('fetch', (event) => {
         return caches.match(event.request).then((cachedResponse) => {
           if (cachedResponse) return cachedResponse;
           if (event.request.headers.get('accept')?.includes('text/html')) {
-            return caches.match('./rider.html');
+            return caches.match('./index.html');
           }
         });
       })

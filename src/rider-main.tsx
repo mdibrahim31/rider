@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { DeliveryProvider } from './context/DeliveryContext';
 import { RiderPortal } from './components/rider/RiderPortal';
+import App from './App';
 import { Bike, RefreshCw } from 'lucide-react';
 import './index.css';
 
@@ -51,6 +52,49 @@ class RiderErrorBoundary extends React.Component<
 }
 
 const StandaloneRiderApp: React.FC = () => {
+  const [activePortal, setActivePortal] = useState<string | null>(() => {
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const portalParam = params.get('portal');
+      if (portalParam && ['customer', 'vendor', 'admin', 'subadmin'].includes(portalParam)) {
+        return portalParam;
+      }
+      const hash = window.location.hash.replace('#', '').split('?')[0];
+      if (hash && ['customer', 'vendor', 'admin', 'subadmin'].includes(hash)) {
+        return hash;
+      }
+    }
+    return null;
+  });
+
+  useEffect(() => {
+    const handleCheck = () => {
+      const params = new URLSearchParams(window.location.search);
+      const portalParam = params.get('portal');
+      const hash = window.location.hash.replace('#', '').split('?')[0];
+      const match = (portalParam && ['customer', 'vendor', 'admin', 'subadmin'].includes(portalParam))
+        ? portalParam
+        : (hash && ['customer', 'vendor', 'admin', 'subadmin'].includes(hash))
+        ? hash
+        : null;
+      setActivePortal(match);
+    };
+    window.addEventListener('hashchange', handleCheck);
+    window.addEventListener('popstate', handleCheck);
+    return () => {
+      window.removeEventListener('hashchange', handleCheck);
+      window.removeEventListener('popstate', handleCheck);
+    };
+  }, []);
+
+  if (activePortal) {
+    return (
+      <RiderErrorBoundary>
+        <App />
+      </RiderErrorBoundary>
+    );
+  }
+
   return (
     <RiderErrorBoundary>
       <DeliveryProvider>
