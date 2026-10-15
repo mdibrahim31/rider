@@ -109,18 +109,3 @@ const StandaloneRiderApp: React.FC = () => {
 };
 
 createRoot(document.getElementById('root')!).render(<StandaloneRiderApp />);
-
-// Register Service Worker for PWA / WebAPK installability and offline support
-if ('serviceWorker' in navigator && (window.location.protocol === 'https:' || window.location.hostname === 'localhost')) {
-  window.addEventListener('load', () => {
-    const swUrl = new URL('sw-rider.js', window.location.href).href;
-    navigator.serviceWorker
-      .register(swUrl)
-      .then((reg) => {
-        console.log('✅ Rider PWA/WebAPK Service Worker registered:', reg.scope);
-      })
-      .catch((err) => {
-        console.warn('Rider Service Worker registration notice:', err);
-      });
-  });
-}
